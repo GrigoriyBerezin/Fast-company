@@ -26,25 +26,24 @@ const GroupList = ({
                 ))}
             </ul>
         );
-    } else {
-        return (
-            <ul className="list-group">
-                {items.map((item) => (
-                    <li
-                        key={item[valueProperty]}
-                        className={
-                            "list-group-item" +
-                            (item === selectedItem ? " active" : "")
-                        }
-                        onClick={() => onItemSelect(item)}
-                        role="button"
-                    >
-                        {item[contentProperty]}
-                    </li>
-                ))}
-            </ul>
-        );
     }
+    return (
+        <ul className="list-group">
+            {items.map((item) => (
+                <li
+                    key={item[valueProperty]}
+                    className={
+                        "list-group-item" +
+                        (item === selectedItem ? " active" : "")
+                    }
+                    onClick={() => onItemSelect(item)}
+                    role="button"
+                >
+                    {item[contentProperty]}
+                </li>
+            ))}
+        </ul>
+    );
 };
 GroupList.defaultProps = {
     valueProperty: "_id",

@@ -1,15 +1,15 @@
-import { paginate } from "./utils/paginate";
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { paginate } from "../utils/paginate";
 import Pagination from "./pagination";
 import User from "./user";
-import PropTypes from "prop-types";
+import api from "../api";
 import GroupList from "./groupList";
-import api from "../../api";
 import SearchStatus from "./searchStatus";
 const Users = ({ users: allUsers, ...rest }) => {
+    const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
 
     const pageSize = 2;
     useEffect(() => {
@@ -27,13 +27,19 @@ const Users = ({ users: allUsers, ...rest }) => {
         setCurrentPage(pageIndex);
     };
     const filteredUsers = selectedProf
-        ? allUsers.filter((user) => user.profession === selectedProf)
+        ? allUsers.filter(
+              (user) =>
+                  JSON.stringify(user.profession) ===
+                  JSON.stringify(selectedProf)
+          )
         : allUsers;
+
     const count = filteredUsers.length;
-    const userCrop = paginate(filteredUsers, currentPage, pageSize);
+    const usersCrop = paginate(filteredUsers, currentPage, pageSize);
     const clearFilter = () => {
         setSelectedProf();
     };
+
     return (
         <div className="d-flex">
             {professions && (
@@ -47,6 +53,7 @@ const Users = ({ users: allUsers, ...rest }) => {
                         className="btn btn-secondary mt-2"
                         onClick={clearFilter}
                     >
+                        {" "}
                         Очистить
                     </button>
                 </div>
@@ -67,7 +74,7 @@ const Users = ({ users: allUsers, ...rest }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {userCrop.map((user) => (
+                            {usersCrop.map((user) => (
                                 <User {...rest} {...user} key={user._id} />
                             ))}
                         </tbody>
@@ -85,10 +92,8 @@ const Users = ({ users: allUsers, ...rest }) => {
         </div>
     );
 };
-
 Users.propTypes = {
-    users: PropTypes.array,
-    length: PropTypes.node
+    users: PropTypes.array
 };
 
 export default Users;

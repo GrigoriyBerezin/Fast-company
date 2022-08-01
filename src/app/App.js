@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Users from "./app/components/users";
+import Users from "./components/users";
+
 import api from "./api";
+
 function App() {
     const [users, setUsers] = useState();
-
+    useEffect(() => {
+        api.users.fetchAll().then((data) => setUsers(data));
+    }, []);
     const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId));
     };
@@ -18,9 +22,6 @@ function App() {
         );
         console.log(id);
     };
-    useEffect(() => {
-        api.users.fetchAll().then((data) => setUsers(data));
-    }, []);
     return (
         <div>
             {users && (
