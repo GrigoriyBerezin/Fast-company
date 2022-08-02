@@ -16,6 +16,7 @@ const Users = ({ users: allUsers, ...rest }) => {
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfession(data));
     }, []);
+
     useEffect(() => {
         setCurrentPage(1);
     }, [selectedProf]);
@@ -28,14 +29,7 @@ const Users = ({ users: allUsers, ...rest }) => {
         setCurrentPage(pageIndex);
     };
     const handleSort = (item) => {
-        if (sortBy.iter === item) {
-            setSortBy((prevState) => ({
-                ...prevState,
-                order: prevState.order === "asc" ? "desc" : "asc"
-            }));
-        } else {
-            setSortBy({ iter: item, order: "asc" });
-        }
+        setSortBy(item);
     };
 
     const filteredUsers = selectedProf
@@ -77,6 +71,7 @@ const Users = ({ users: allUsers, ...rest }) => {
                     <UserTable
                         users={usersCrop}
                         onSort={handleSort}
+                        selectedSort={sortBy}
                         {...rest}
                     />
                 )}
