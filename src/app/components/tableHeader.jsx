@@ -12,6 +12,16 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
             onSort({ path: item, order: "asc" });
         }
     };
+    const Arrow = (selectedSort, currentPath) => {
+        if (selectedSort.path === currentPath) {
+            if (selectedSort.order === "asc") {
+                return <span className="bi bi-caret-up-fill" />;
+            } else {
+                return <span className="bi bi-caret-down-fill" />;
+            }
+        }
+        return null;
+    };
     return (
         <thead>
             <tr>
@@ -27,6 +37,7 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
                         scope="col"
                     >
                         {columns[column].name}
+                        {Arrow(selectedSort, columns[column].path)}
                     </th>
                 ))}
                 {/* <th scope="col">Качества</th>
@@ -46,7 +57,14 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
             </tr>
         </thead>
     );
+    // const arrowDown = () => {
+    //     return <span className="bi bi-caret-down-fill"/>;
+    // };
+    // const arrowUp = () => {
+    //     return <span className="bi bi-caret-up-fill"/>;
+    // };
 };
+
 TableHeader.propTypes = {
     onSort: PropTypes.func.isRequired,
     selectedSort: PropTypes.object.isRequired,
