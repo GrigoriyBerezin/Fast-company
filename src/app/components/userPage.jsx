@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import UsersList from "./usersList";
 
 const User = ({ id, users }) => {
     const history = useHistory();
