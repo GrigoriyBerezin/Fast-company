@@ -1,16 +1,15 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import UsersList from "./usersList";
 
-const User = ({ id, users }) => {
+const User = ({ match, users }) => {
     const history = useHistory();
-    const getById = (id) => {
+    const getUserById = (id) => {
         return users.find((user) => user.id.toString() === id);
     };
     const handleSave = () => {
         history.push("/users");
     };
-    const user = getById(id);
+    const user = getUserById(id);
     return (
         <>
             {" "}
