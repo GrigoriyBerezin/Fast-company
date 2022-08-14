@@ -1,28 +1,12 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const User = ({ match, users }) => {
-    const history = useHistory();
-    const getUserById = (id) => {
-        return users.find((user) => user.id.toString() === id);
-    };
-    const handleSave = () => {
-        history.push("/users");
-    };
-    const user = getUserById(id);
-    return (
-        <>
-            {" "}
-            <h2>{user ? user.label : `Post with id:${id} not found`}</h2>
-            <button
-                onClick={() => {
-                    handleSave();
-                }}
-            >
-                Все Пользователиы
-            </button>
-        </>
-    );
+const UserPage = ({ userId }) => {
+    return <h1>UserPage{userId}</h1>;
 };
 
-export default User;
+UserPage.propTypes = {
+    userId: PropTypes.string.isRequired
+};
+
+export default UserPage;

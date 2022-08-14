@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Users from "./layouts/users";
 import Main from "./layouts/main";
 import Login from "./layouts/login";
@@ -13,6 +13,7 @@ function App() {
                 <Route path="/" exact component={Main} />
                 <Route path="/login" component={Login}/>
                 <Route path="/users/:userId?" component={Users} />
+                <Redirect to="/"/>
             </Switch>
         </div>
     );
