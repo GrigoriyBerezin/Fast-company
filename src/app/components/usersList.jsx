@@ -5,13 +5,13 @@ import Pagination from "./pagination";
 import api from "../api";
 import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
-import UserTable from "./usersTable";
+import UsersTable from "./usersTable";
 import _ from "lodash";
 const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
-    const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
+    const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const pageSize = 8;
 
     const [users, setUsers] = useState();
@@ -22,16 +22,15 @@ const UsersList = () => {
         setUsers(users.filter((user) => user._id !== userId));
     };
     const handleToggleBookMark = (id) => {
-        setUsers(
-            users.map((user) => {
-                if (user._id === id) {
-                    return { ...user, bookmark: !user.bookmark };
-                }
-                return user;
-            })
-        );
-        // setUsers();
+        const newArray = users.map((user) => {
+            if (user._id === id) {
+                return { ...user, bookmark: !user.bookmark };
+            }
+            return user;
+        });
+        setUsers(newArray);
     };
+
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfession(data));
     }, []);
@@ -85,14 +84,14 @@ const UsersList = () => {
                             onClick={clearFilter}
                         >
                             {" "}
-                            Очистить
+                            Очиститть
                         </button>
                     </div>
                 )}
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
                     {count > 0 && (
-                        <UserTable
+                        <UsersTable
                             users={usersCrop}
                             onSort={handleSort}
                             selectedSort={sortBy}
