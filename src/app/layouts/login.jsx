@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "../components/textField";
 import { validator } from "../utils/validator";
 
@@ -15,6 +15,9 @@ const Login = () => {
         email: {
             isRequired: {
                 massage: "Электронная почта обязательна для заполнения"
+            },
+            isEmail: {
+                message: "Email введен некорректно"
             }
         },
         password: {
