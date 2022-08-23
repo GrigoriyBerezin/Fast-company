@@ -5,7 +5,7 @@ import Pagination from "./pagination";
 import api from "../api";
 import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
-import UsersTable from "./usersTable";
+import UserTable from "./usersTable";
 import _ from "lodash";
 const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -13,6 +13,9 @@ const UsersList = () => {
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const pageSize = 8;
+
+    // создаем
+    const [searchStatus, setSearchStatus] = useState();
 
     const [users, setUsers] = useState();
     useEffect(() => {
@@ -50,8 +53,20 @@ const UsersList = () => {
         setSortBy(item);
     };
 
+    // создаем метод handleSearchStatus
+    const handleSearchStatus = ({ target }) => {
+        setSearchStatus(target.value);
+    };
+
     if (users) {
-        const filteredUsers = selectedProf
+        const filteredUsers = searchStatus
+            ? users.filter(
+                  (user) =>
+                      user.name
+                          .toLowerCase() // только к нижнему регистру
+                          .indexOf(searchStatus.toLowerCase()) !== -1 // без -1 ломается поиск???
+              )
+            : selectedProf
             ? users.filter(
                   (user) =>
                       JSON.stringify(user.profession) ===
@@ -84,14 +99,21 @@ const UsersList = () => {
                             onClick={clearFilter}
                         >
                             {" "}
-                            Очиститть
+                            Очистить
                         </button>
                     </div>
                 )}
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
+                    <input
+                        type="text"
+                        name="searchStatus"
+                        placeholder="поиск"
+                        onChange={handleSearchStatus}
+                        value={searchStatus}
+                    />
                     {count > 0 && (
-                        <UsersTable
+                        <UserTable
                             users={usersCrop}
                             onSort={handleSort}
                             selectedSort={sortBy}
