@@ -10,12 +10,10 @@ import _ from "lodash";
 const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
+    const [searchQuery, setSearchQuery] = useState("");
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const pageSize = 8;
-
-    // создаем
-    const [searchStatus, setSearchStatus] = useState();
 
     const [users, setUsers] = useState();
     useEffect(() => {
@@ -40,10 +38,15 @@ const UsersList = () => {
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [selectedProf]);
+    }, [selectedProf, searchQuery]);
 
     const handleProfessionSelect = (item) => {
+        if (searchQuery !== "") setSearchQuery("");
         setSelectedProf(item);
+    };
+    const handleSearchQuery = ({ target }) => {
+        setSelectedProf(undefined);
+        setSearchQuery(target.value);
     };
 
     const handlePageChange = (pageIndex) => {
@@ -53,18 +56,13 @@ const UsersList = () => {
         setSortBy(item);
     };
 
-    // создаем метод handleSearchStatus
-    const handleSearchStatus = ({ target }) => {
-        setSearchStatus(target.value);
-    };
-
     if (users) {
-        const filteredUsers = searchStatus
+        const filteredUsers = searchQuery
             ? users.filter(
                   (user) =>
                       user.name
-                          .toLowerCase() // только к нижнему регистру
-                          .indexOf(searchStatus.toLowerCase()) !== -1 // без -1 ломается поиск???
+                          .toLowerCase()
+                          .indexOf(searchQuery.toLowerCase()) !== -1
               )
             : selectedProf
             ? users.filter(
@@ -107,10 +105,10 @@ const UsersList = () => {
                     <SearchStatus length={count} />
                     <input
                         type="text"
-                        name="searchStatus"
-                        placeholder="поиск"
-                        onChange={handleSearchStatus}
-                        value={searchStatus}
+                        name="searchQuery"
+                        placeholder="Search..."
+                        onChange={handleSearchQuery}
+                        value={searchQuery}
                     />
                     {count > 0 && (
                         <UserTable
