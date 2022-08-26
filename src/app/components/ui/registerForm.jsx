@@ -3,11 +3,14 @@ import { validator } from "../../utils/validator";
 import TextField from "../common/form/textField";
 import api from "../../api";
 import SelectField from "../common/form/selectField";
+import RadioField from "../common/form/radioField";
+import Select from "react-select";
 const RegisterForm = () => {
     const [data, setData] = useState({
         email: "",
         password: "",
-        profession: ""
+        profession: "",
+        sex: "male"
     });
     const [professions, setProfession] = useState();
     const [errors, setErrors] = useState({});
@@ -90,6 +93,23 @@ const RegisterForm = () => {
                 onChange={handleChange}
                 value={data.profession}
                 error={errors.profession}
+            />
+            <RadioField
+                options={[
+                    { name: "Male", value: "male" },
+                    { name: "Female", value: "female" },
+                    { name: "Other", value: "other" }
+                ]}
+                value={data.sex}
+                name="sex"
+                onChange={handleChange}
+            />
+            <Select 
+            isMulti
+            options={}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            onChange={handleChange}
             />
 
             <button
