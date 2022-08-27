@@ -7,7 +7,7 @@ export function validator(data, config) {
                 if (typeof data === "boolean") {
                     statusValidate = !data;
                 } else {
-                statusValidate = data.trim() === "";
+                    statusValidate = data.trim() === "";
                 }
                 break;
             }
@@ -15,7 +15,7 @@ export function validator(data, config) {
                 const emailRegExp = /^\S+@\S+\.\S+$/g;
                 statusValidate = !emailRegExp.test(data);
                 break;
-                }
+            }
             case "isCapitalSymbol": {
                 const capitalRegExp = /[A-Z]+/g;
                 statusValidate = !capitalRegExp.test(data);

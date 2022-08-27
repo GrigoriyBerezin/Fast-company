@@ -16,11 +16,10 @@ const LoginForm = () => {
             [target.name]: target.value
         }));
     };
-
     const validatorConfig = {
         email: {
             isRequired: {
-                massage: "Электронная почта обязательна для заполнения"
+                message: "Электронная почта обязательна для заполнения"
             },
             isEmail: {
                 message: "Email введен некорректно"
@@ -28,13 +27,13 @@ const LoginForm = () => {
         },
         password: {
             isRequired: {
-                massage: "Пароль обязателен для заполнения"
+                message: "Пароль обязателен для заполнения"
             },
             isCapitalSymbol: {
                 message: "Пароль должен содержать хотя бы одну заглавную букву"
             },
             isContainDigit: {
-                message: "Пароль должен содержать хотя бы одну цифру"
+                message: "Пароль должен содержать хотя бы одно число"
             },
             min: {
                 message: "Пароль должен состоять минимум из 8 символов",
@@ -47,7 +46,6 @@ const LoginForm = () => {
     }, [data]);
     const validate = () => {
         const errors = validator(data, validatorConfig);
-
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
@@ -64,7 +62,7 @@ const LoginForm = () => {
             <TextField
                 label="Электронная почта"
                 name="email"
-                valye={data.email}
+                value={data.email}
                 onChange={handleChange}
                 error={errors.email}
             />
@@ -72,7 +70,7 @@ const LoginForm = () => {
                 label="Пароль"
                 type="password"
                 name="password"
-                valye={data.password}
+                value={data.password}
                 onChange={handleChange}
                 error={errors.password}
             />
@@ -84,9 +82,9 @@ const LoginForm = () => {
                 Оставаться в системе
             </CheckBoxField>
             <button
+                className="btn btn-primary w-100 mx-auto"
                 type="submit"
                 disabled={!isValid}
-                className="btn btn-primary w-100 mx-auto"
             >
                 Submit
             </button>
