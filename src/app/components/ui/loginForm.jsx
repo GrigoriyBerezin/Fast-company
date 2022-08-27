@@ -16,6 +16,7 @@ const LoginForm = () => {
             [target.name]: target.value
         }));
     };
+
     const validatorConfig = {
         email: {
             isRequired: {
@@ -46,6 +47,7 @@ const LoginForm = () => {
     }, [data]);
     const validate = () => {
         const errors = validator(data, validatorConfig);
+
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
