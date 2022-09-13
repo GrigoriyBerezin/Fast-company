@@ -84,16 +84,16 @@ const UsersListPage = () => {
         };
 
         return (
-            <div className='d-flex'>
+            <div className="d-flex">
                 {professions && (
-                    <div className='d-flex flex-column flex-shrink-0 p-3'>
+                    <div className="d-flex flex-column flex-shrink-0 p-3">
                         <GroupList
                             selectedItem={selectedProf}
                             items={professions}
                             onItemSelect={handleProfessionSelect}
                         />
                         <button
-                            className='btn btn-secondary mt-2'
+                            className="btn btn-secondary mt-2"
                             onClick={clearFilter}
                         >
                             {" "}
@@ -101,12 +101,12 @@ const UsersListPage = () => {
                         </button>
                     </div>
                 )}
-                <div className='d-flex flex-column'>
+                <div className="d-flex flex-column">
                     <SearchStatus length={count} />
                     <input
-                        type='text'
-                        name='searchQuery'
-                        placeholder='Search...'
+                        type="text"
+                        name="searchQuery"
+                        placeholder="Search..."
                         onChange={handleSearchQuery}
                         value={searchQuery}
                     />
@@ -119,7 +119,7 @@ const UsersListPage = () => {
                             onToggleBookMark={handleToggleBookMark}
                         />
                     )}
-                    <div className='d-flex justify-content-center'>
+                    <div className="d-flex justify-content-center">
                         <Pagination
                             itemsCount={count}
                             pageSize={pageSize}
@@ -134,7 +134,7 @@ const UsersListPage = () => {
     return "загрузка...";
 };
 UsersListPage.propTypes = {
-    users: PropTypes.array,
+    users: PropTypes.array
 };
 
 export default UsersListPage;
