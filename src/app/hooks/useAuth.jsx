@@ -6,7 +6,10 @@ import userService from "../services/user.service";
 import { setTokens } from "../services/localStorage.service";
 
 const httpAuth = axios.create({
-    baseURL: "https://identitytoolkit.googleapis.com/v1/"
+    baseURL: "https://identitytoolkit.googleapis.com/v1/",
+    params: {
+        key: "process.env.REACT_APP_FIREBASE_KEY"
+    }
 });
 const AuthContext = React.createContext();
 
@@ -21,7 +24,7 @@ const AuthProvider = ({ children }) => {
     async function logIn({ email, password }) {
         try {
             const { data } = await httpAuth.post(
-                `accounts:signInWithPassword?key: ${process.env.REACT_APP_FIREBASE_KEY}`,
+                `accounts:signInWithPassword?key`,
                 {
                     email,
                     password,
@@ -43,14 +46,11 @@ const AuthProvider = ({ children }) => {
 
     async function signUp({ email, password, ...rest }) {
         try {
-            const { data } = await httpAuth.post(
-                `accounts:signUp?key: ${process.env.REACT_APP_FIREBASE_KEY}`,
-                {
-                    email,
-                    password,
-                    returnSecureToken: true
-                }
-            );
+            const { data } = await httpAuth.post(`accounts:signUp?key`, {
+                email,
+                password,
+                returnSecureToken: true
+            });
             setTokens(data);
             await createUser({ _id: data.localId, email, ...rest });
         } catch (error) {
